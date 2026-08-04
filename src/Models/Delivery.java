@@ -20,6 +20,24 @@ public class Delivery {
     private int extraRuns;
     private int totalRuns;
     private String playerDismissed;
+    private String dismissalKing;
+    private String fielder;
+
+    public String getDismissalKing() {
+        return dismissalKing;
+    }
+
+    public void setDismissalKing(String dismissalKing) {
+        this.dismissalKing = dismissalKing;
+    }
+
+    public String getFielder() {
+        return fielder;
+    }
+
+    public void setFielder(String fielder) {
+        this.fielder = fielder;
+    }
 
     public Delivery() {
     }
@@ -181,8 +199,8 @@ public class Delivery {
         return "Delivery{" +
                 "matchId=" + matchId +
                 ", inning=" + inning +
-                ", batting_team='" + battingTeam + '\'' +
-                ", bowling_team='" + bowlingTeam + '\'' +
+                ", battingTeam='" + battingTeam + '\'' +
+                ", bowlingTeam='" + bowlingTeam + '\'' +
                 ", over=" + over +
                 ", ball=" + ball +
                 ", batsman='" + batsman + '\'' +
@@ -192,12 +210,14 @@ public class Delivery {
                 ", wideRuns=" + wideRuns +
                 ", byeRuns=" + byeRuns +
                 ", legByeRuns=" + legByeRuns +
-                ", noballRuns=" + noBallRuns +
+                ", noBallRuns=" + noBallRuns +
                 ", penaltyRuns=" + penaltyRuns +
                 ", batsmanRuns=" + batsmanRuns +
                 ", extraRuns=" + extraRuns +
                 ", totalRuns=" + totalRuns +
                 ", playerDismissed='" + playerDismissed + '\'' +
+                ", dismissalKing='" + dismissalKing + '\'' +
+                ", fielder='" + fielder + '\'' +
                 '}';
     }
 }

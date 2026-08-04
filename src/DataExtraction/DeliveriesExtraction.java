@@ -56,6 +56,8 @@ public class DeliveriesExtraction {
         delivery.setExtraRuns(Integer.parseInt(values.get(16)));
         delivery.setTotalRuns(Integer.parseInt(values.get(17)));
         delivery.setPlayerDismissed(values.get(18));
+        delivery.setDismissalKing(values.get(19));
+        delivery.setFielder(values.get(20));
 
         return delivery;
     }

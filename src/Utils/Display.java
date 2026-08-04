@@ -1,8 +1,9 @@
 package Utils;
 
-import POJO.Pairs;
+import POJO.BowlerEconomy;
 import Models.Delivery;
 import Models.Match;
+import POJO.BowlerWickets;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class Display {
         System.out.println("Enter 2 for Matches Won by all Teams all over IPL");
         System.out.println("Enter 3 for Extra Runs Conceded per Team");
         System.out.println("Enter 4 for Top Economical Bowlers");
+        System.out.println("Enter 5 for Leading Wicket Takers");
 
         System.out.println("Enter feature (or 0 for exit): ");
     }
@@ -94,7 +96,8 @@ public class Display {
         }
     }
 
-    public static void printEconomicalBowlers(List<Pairs> economicalBowlers, int limit) {
+    public static void printEconomicalBowlers(List<BowlerEconomy> economicalBowlers, int limit) {
+
         printTitle("Top " + limit + " Economical Bowlers");
 
         System.out.printf("%-5s | %-30s | %-10s%n",
@@ -102,7 +105,7 @@ public class Display {
         simpleLine();
 
         int rank = 1;
-        for (Pairs bowler: economicalBowlers) {
+        for (BowlerEconomy bowler: economicalBowlers) {
             if (rank > limit)
                 break;
 
@@ -110,6 +113,25 @@ public class Display {
                     rank++,
                     bowler.getBowler(),
                     bowler.getEconomy());
+        }
+    }
+
+    public static void printWicketBowlers(List<BowlerWickets> wicketBowlers, int limit) {
+        printTitle("Top " + limit + " Leading Wicket Takers");
+
+        System.out.printf("%-5s | %-30s | %-10s%n",
+                "Rank", "Bowler", "Wickets");
+        simpleLine();
+
+        int rank = 1;
+        for (BowlerWickets bowler: wicketBowlers) {
+            if (rank > limit)
+                break;
+
+            System.out.printf("%-5d | %-30s | %-10d%n",
+                    rank++,
+                    bowler.getBowler(),
+                    bowler.getWickets());
         }
     }
 }

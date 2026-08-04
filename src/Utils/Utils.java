@@ -2,6 +2,7 @@ package Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Utils {
     public List<String> split(String str) {
@@ -29,5 +30,11 @@ public class Utils {
         result.add(current.toString());
 
         return result;
+    }
+
+    public int intInput(String message){
+        Scanner sc = new Scanner(System.in);
+        System.out.println(message);
+        return sc.nextInt();
     }
 }

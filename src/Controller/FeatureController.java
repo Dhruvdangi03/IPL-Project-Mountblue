@@ -57,6 +57,9 @@ public class FeatureController {
             case 4:
                 feature.topEconomicalBowlers(matches, deliveries);
                 break;
+            case 5:
+                feature.topWicketTakingBowler(matches, deliveries);
+                break;
             default:
                 System.out.println("Invalid feature.");
         }

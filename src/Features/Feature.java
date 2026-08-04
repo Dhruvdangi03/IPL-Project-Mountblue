@@ -3,11 +3,12 @@ package Features;
 import Models.Delivery;
 import Models.Match;
 import POJO.*;
-import Utils.Display;
+import Utils.*;
 
 import java.util.*;
 
 public class Feature {
+    Utils utils = new Utils();
     public void matchesPerYear(List<Match> matches){
         TreeMap<Integer, Integer> perYear = new TreeMap<>();
 
@@ -49,15 +50,12 @@ public class Feature {
     }
 
     public void topEconomicalBowlers(List<Match> matches, List<Delivery> deliveries){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the number of Bowlers :");
-        int bowlers = sc.nextInt();
-        System.out.println("Enter the Session :");
-        int session = sc.nextInt();
+        int bowlers = utils.intInput("Enter the number of Bowlers :");
+        int session = utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session, matches);
         HashMap<String, BallsAndRuns> bowlersAndRuns = new HashMap<>();
-        List<Pairs> economicalBowlers = new ArrayList<>();
+        List<BowlerEconomy> economicalBowlers = new ArrayList<>();
 
         for(Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
@@ -85,10 +83,34 @@ public class Feature {
             double overs = legalBalls / 6.0;
             double economy = stats.getRuns() / overs;
 
-            economicalBowlers.add(new Pairs(economy, entry.getKey()));
+            economicalBowlers.add(new BowlerEconomy(economy, entry.getKey()));
         }
-        economicalBowlers.sort(Pairs::compareTo);
+        economicalBowlers.sort(BowlerEconomy::compareTo);
         Display.printEconomicalBowlers(economicalBowlers, bowlers);
+    }
+
+    public void topWicketTakingBowler(List<Match> matches, List<Delivery> deliveries){
+        int bowlers = utils.intInput("Enter the number of Bowlers :");
+        int session = utils.intInput("Enter the Session :");
+
+        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashMap<String, Integer> bowlersAndWickets = new HashMap<>();
+        List<BowlerWickets> wicketBowlers = new ArrayList<>();
+
+        for (Delivery delivery: deliveries){
+            if(matchSet.contains(delivery.getMatchId())){
+                if(!delivery.getPlayerDismissed().isEmpty()){
+                    bowlersAndWickets.put(delivery.getBowler(), bowlersAndWickets.getOrDefault(delivery.getBowler(), 0) +1);
+                }
+            }
+        }
+
+        for(Map.Entry<String, Integer> entry: bowlersAndWickets.entrySet()){
+            wicketBowlers.add(new BowlerWickets(entry.getKey(), entry.getValue()));
+        }
+
+        wicketBowlers.sort(BowlerWickets::compareTo);
+        Display.printWicketBowlers(wicketBowlers, bowlers);
     }
 
     private HashSet<Integer> matchesBySession(int session, List<Match> matches){

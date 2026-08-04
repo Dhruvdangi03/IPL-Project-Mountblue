@@ -136,8 +136,10 @@ public class Feature {
         for(Map.Entry<String, int[]> entry: batsmanAndRuns.entrySet()){
             int runs = entry.getValue()[0];
             int balls = entry.getValue()[1];
-            double runRate = (double)runs / ((double) balls / 6.0);
-            batsmanRuns.add(new BatsmanRun(entry.getKey(), runRate));
+            if(balls < 100)
+                continue;
+            double strikeRate = ((double) runs / balls) * 100;
+            batsmanRuns.add(new BatsmanRun(entry.getKey(), strikeRate));
         }
 
         batsmanRuns.sort(BatsmanRun::compareTo);

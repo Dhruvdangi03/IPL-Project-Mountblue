@@ -138,10 +138,10 @@ public class Display {
     }
 
     public static void printTopStrikeRate(List<BatsmanRun> batsmanRuns, int limit) {
-        printTitle("Top " + limit + " Leading Wicket Takers");
+        printTitle("Top " + limit + " Batsmen with Strike Rate");
 
         System.out.printf("%-5s | %-30s | %-10s%n",
-                "Rank", "Batsman", "RunRate");
+                "Rank", "Batsman", "StrikeRate");
         simpleLine();
 
         int rank = 1;
@@ -152,7 +152,7 @@ public class Display {
             System.out.printf("%-5d | %-30s | %-10f%n",
                     rank++,
                     batsmanRun.getBatsman(),
-                    batsmanRun.getRunRate());
+                    batsmanRun.getStrikeRate());
         }
     }
 }

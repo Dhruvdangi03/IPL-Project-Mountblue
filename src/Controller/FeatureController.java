@@ -58,10 +58,19 @@ public class FeatureController {
                 feature.topEconomicalBowlers(matches, deliveries);
                 break;
             case 5:
-                feature.topWicketTakingBowler(matches, deliveries);
+                feature.topStrikeRate(matches, deliveries);
                 break;
             case 6:
-                feature.topStrikeRate(matches, deliveries);
+                feature.highestRunScoringBatsmen(matches, deliveries, true);
+                break;
+            case 7:
+                feature.topWicketTakingBowler(matches, deliveries, true);
+                break;
+            case 8:
+                feature.topWicketTakingBowler(matches, deliveries, false);
+                break;
+            case 9:
+                feature.highestRunScoringBatsmen(matches, deliveries, false);
                 break;
             default:
                 System.out.println("Invalid feature.");

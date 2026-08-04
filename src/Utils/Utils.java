@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Utils {
+    Scanner sc = new Scanner(System.in);
     public List<String> split(String str) {
         List<String> result = new ArrayList<>();
         StringBuilder current = new StringBuilder();
@@ -33,7 +34,6 @@ public class Utils {
     }
 
     public int intInput(String message){
-        Scanner sc = new Scanner(System.in);
         System.out.println(message);
         return sc.nextInt();
     }

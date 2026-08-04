@@ -1,6 +1,6 @@
 package POJO;
 
-public class BatsmanRun implements Comparable<BatsmanRun> {
+public class BatsmanStikeRate implements Comparable<BatsmanStikeRate> {
     private String batsman;
     private double strikeRate;
 
@@ -12,13 +12,13 @@ public class BatsmanRun implements Comparable<BatsmanRun> {
         return batsman;
     }
 
-    public BatsmanRun(String batsman, double strikeRate) {
+    public BatsmanStikeRate(String batsman, double strikeRate) {
         this.strikeRate = strikeRate;
         this.batsman = batsman;
     }
 
     @Override
-    public int compareTo(BatsmanRun other) {
+    public int compareTo(BatsmanStikeRate other) {
         if(this.getStrikeRate() > other.getStrikeRate())
             return -1;
         else if (this.getStrikeRate() < other.getStrikeRate()) {

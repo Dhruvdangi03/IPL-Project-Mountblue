@@ -89,37 +89,13 @@ public class Feature {
         Display.printEconomicalBowlers(economicalBowlers, bowlers);
     }
 
-    public void topWicketTakingBowler(List<Match> matches, List<Delivery> deliveries){
-        int bowlers = utils.intInput("Enter the number of Bowlers :");
-        int session = utils.intInput("Enter the Session :");
-
-        HashSet<Integer> matchSet = matchesBySession(session, matches);
-        HashMap<String, Integer> bowlersAndWickets = new HashMap<>();
-        List<BowlerWickets> wicketBowlers = new ArrayList<>();
-
-        for (Delivery delivery: deliveries){
-            if(matchSet.contains(delivery.getMatchId())){
-                if(!delivery.getPlayerDismissed().isEmpty() && !delivery.getDismissalKing().equals("run out")){
-                    bowlersAndWickets.put(delivery.getBowler(), bowlersAndWickets.getOrDefault(delivery.getBowler(), 0) +1);
-                }
-            }
-        }
-
-        for(Map.Entry<String, Integer> entry: bowlersAndWickets.entrySet()){
-            wicketBowlers.add(new BowlerWickets(entry.getKey(), entry.getValue()));
-        }
-
-        wicketBowlers.sort(BowlerWickets::compareTo);
-        Display.printWicketBowlers(wicketBowlers, bowlers);
-    }
-
     public void topStrikeRate(List<Match> matches, List<Delivery> deliveries){
         int batsmen = utils.intInput("Enter the number of Batsmen :");
         int session = utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session, matches);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
-        List<BatsmanRun> batsmanRuns = new ArrayList<>();
+        List<BatsmanStikeRate> batsmanStikeRates = new ArrayList<>();
 
         for (Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
@@ -139,11 +115,70 @@ public class Feature {
             if(balls < 100)
                 continue;
             double strikeRate = ((double) runs / balls) * 100;
-            batsmanRuns.add(new BatsmanRun(entry.getKey(), strikeRate));
+            batsmanStikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
         }
 
-        batsmanRuns.sort(BatsmanRun::compareTo);
-        Display.printTopStrikeRate(batsmanRuns, batsmen);
+        batsmanStikeRates.sort(BatsmanStikeRate::compareTo);
+        Display.printTopStrikeRate(batsmanStikeRates, batsmen);
+    }
+
+    public void topWicketTakingBowler(List<Match> matches, List<Delivery> deliveries, boolean purpleCap){
+        int bowlers = 0;
+        if(!purpleCap)
+            bowlers = utils.intInput("Enter the number of Bowlers :");
+        int session = utils.intInput("Enter the Session :");
+
+        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashMap<String, Integer> bowlersAndWickets = new HashMap<>();
+        List<BowlerWickets> wicketBowlers = new ArrayList<>();
+
+        for (Delivery delivery: deliveries){
+            if(matchSet.contains(delivery.getMatchId())){
+                if(!delivery.getPlayerDismissed().isEmpty() && !delivery.getDismissalKing().equals("run out")){
+                    bowlersAndWickets.put(delivery.getBowler(), bowlersAndWickets.getOrDefault(delivery.getBowler(), 0) +1);
+                }
+            }
+        }
+
+        for(Map.Entry<String, Integer> entry: bowlersAndWickets.entrySet()){
+            wicketBowlers.add(new BowlerWickets(entry.getKey(), entry.getValue()));
+        }
+
+        wicketBowlers.sort(BowlerWickets::compareTo);
+        if(purpleCap)
+            Display.printPurpleCap(wicketBowlers, session);
+        else
+            Display.printWicketBowlers(wicketBowlers, bowlers);
+    }
+
+    public void highestRunScoringBatsmen(List<Match> matches, List<Delivery> deliveries, boolean orangeCap){
+        int batsmen = 1;
+        if(!orangeCap)
+            batsmen = utils.intInput("Enter the number of Batsmen :");
+        int session = utils.intInput("Enter the Session :");
+
+        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashMap<String, Integer> batsmanAndRuns = new HashMap<>();
+        List<BatsmenRuns> batsmenRuns = new ArrayList<>();
+
+        for (Delivery delivery: deliveries){
+            if(matchSet.contains(delivery.getMatchId())){
+                if(delivery.getWideRuns() > 0 || delivery.getNoBallRuns() > 0)
+                    continue;
+
+                batsmanAndRuns.put(delivery.getBatsman(), batsmanAndRuns.getOrDefault(delivery.getBatsman(),0) + delivery.getBatsmanRuns());
+            }
+        }
+
+        for(Map.Entry<String, Integer> entry: batsmanAndRuns.entrySet()){
+            batsmenRuns.add(new BatsmenRuns(entry.getKey(), entry.getValue()));
+        }
+
+        batsmenRuns.sort(BatsmenRuns::compareTo);
+        if(orangeCap)
+            Display.printOrangeCap(batsmenRuns, session);
+        else
+            Display.printTopBatsmenRuns(batsmenRuns, batsmen);
     }
 
     private HashSet<Integer> matchesBySession(int session, List<Match> matches){

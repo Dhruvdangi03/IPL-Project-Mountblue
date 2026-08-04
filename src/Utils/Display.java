@@ -1,5 +1,6 @@
 package Utils;
 
+import POJO.BatsmanRun;
 import POJO.BowlerEconomy;
 import Models.Delivery;
 import Models.Match;
@@ -33,6 +34,7 @@ public class Display {
         System.out.println("Enter 3 for Extra Runs Conceded per Team");
         System.out.println("Enter 4 for Top Economical Bowlers");
         System.out.println("Enter 5 for Leading Wicket Takers");
+        System.out.println("Enter 6 for Top Run Rate Batsmen");
 
         System.out.println("Enter feature (or 0 for exit): ");
     }
@@ -132,6 +134,25 @@ public class Display {
                     rank++,
                     bowler.getBowler(),
                     bowler.getWickets());
+        }
+    }
+
+    public static void printTopStrikeRate(List<BatsmanRun> batsmanRuns, int limit) {
+        printTitle("Top " + limit + " Leading Wicket Takers");
+
+        System.out.printf("%-5s | %-30s | %-10s%n",
+                "Rank", "Batsman", "RunRate");
+        simpleLine();
+
+        int rank = 1;
+        for (BatsmanRun batsmanRun: batsmanRuns) {
+            if (rank > limit)
+                break;
+
+            System.out.printf("%-5d | %-30s | %-10f%n",
+                    rank++,
+                    batsmanRun.getBatsman(),
+                    batsmanRun.getRunRate());
         }
     }
 }

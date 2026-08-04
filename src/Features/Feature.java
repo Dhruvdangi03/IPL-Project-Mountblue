@@ -77,7 +77,7 @@ public class Feature {
         for (Map.Entry<String, BallsAndRuns> entry : bowlersAndRuns.entrySet()){
             BallsAndRuns stats = entry.getValue();
             int legalBalls = stats.getTotalBalls() - stats.getWideBalls() - stats.getNoBalls();
-            if (legalBalls == 0) {
+            if (legalBalls == 6) {
                 continue;
             }
             double overs = legalBalls / 6.0;
@@ -99,7 +99,7 @@ public class Feature {
 
         for (Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
-                if(!delivery.getPlayerDismissed().isEmpty()){
+                if(!delivery.getPlayerDismissed().isEmpty() && !delivery.getDismissalKing().equals("run out")){
                     bowlersAndWickets.put(delivery.getBowler(), bowlersAndWickets.getOrDefault(delivery.getBowler(), 0) +1);
                 }
             }
@@ -111,6 +111,37 @@ public class Feature {
 
         wicketBowlers.sort(BowlerWickets::compareTo);
         Display.printWicketBowlers(wicketBowlers, bowlers);
+    }
+
+    public void topStrikeRate(List<Match> matches, List<Delivery> deliveries){
+        int batsmen = utils.intInput("Enter the number of Batsmen :");
+        int session = utils.intInput("Enter the Session :");
+
+        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
+        List<BatsmanRun> batsmanRuns = new ArrayList<>();
+
+        for (Delivery delivery: deliveries){
+            if(matchSet.contains(delivery.getMatchId())){
+                if(delivery.getWideRuns() > 0 || delivery.getNoBallRuns() > 0)
+                    continue;
+
+                int[] ballsRuns = batsmanAndRuns.getOrDefault(delivery.getBatsman(), new int[]{0, 0});
+                ballsRuns[0] += delivery.getBatsmanRuns();
+                ballsRuns[1]++;
+                batsmanAndRuns.put(delivery.getBatsman(), ballsRuns);
+            }
+        }
+
+        for(Map.Entry<String, int[]> entry: batsmanAndRuns.entrySet()){
+            int runs = entry.getValue()[0];
+            int balls = entry.getValue()[1];
+            double runRate = (double)runs / ((double) balls / 6.0);
+            batsmanRuns.add(new BatsmanRun(entry.getKey(), runRate));
+        }
+
+        batsmanRuns.sort(BatsmanRun::compareTo);
+        Display.printTopStrikeRate(batsmanRuns, batsmen);
     }
 
     private HashSet<Integer> matchesBySession(int session, List<Match> matches){

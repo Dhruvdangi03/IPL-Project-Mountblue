@@ -60,6 +60,9 @@ public class FeatureController {
             case 5:
                 feature.topWicketTakingBowler(matches, deliveries);
                 break;
+            case 6:
+                feature.topStrikeRate(matches, deliveries);
+                break;
             default:
                 System.out.println("Invalid feature.");
         }

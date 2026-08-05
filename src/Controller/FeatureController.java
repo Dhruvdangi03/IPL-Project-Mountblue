@@ -1,31 +1,17 @@
 package Controller;
 
-import DataExtraction.DeliveriesExtraction;
-import DataExtraction.MatchesExtraction;
 import Features.Feature;
-import Models.Delivery;
-import Models.Match;
 import Utils.Display;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class FeatureController {
-
-    private final List<Match> matches;
-    private final List<Delivery> deliveries;
-    private final Feature feature = new Feature();
-
-    public FeatureController() {
-        this.matches = MatchesExtraction.dataExtract();
-        this.deliveries = DeliveriesExtraction.dataExtract();
-    }
-
-    public void start() {
+    static Feature feature = new Feature();
+    public static void start() {
         startInput();
     }
 
-    private void startInput(){
+    private static void startInput(){
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -43,37 +29,37 @@ public class FeatureController {
         sc.close();
     }
 
-    private void callFeature(int input) {
+    private static void callFeature(int input) {
         switch (input) {
             case 1:
-                feature.matchesPerYear(matches);
+                feature.matchesPerYear();
                 break;
             case 2:
-                feature.matchesWonAllTeams(matches);
+                feature.matchesWonAllTeams();
                 break;
             case 3:
-                feature.extraRunsConceded(matches, deliveries);
+                feature.extraRunsConceded();
                 break;
             case 4:
-                feature.topEconomicalBowlers(matches, deliveries);
+                feature.topEconomicalBowlers();
                 break;
             case 5:
-                feature.topStrikeRate(matches, deliveries);
+                feature.topStrikeRate();
                 break;
             case 6:
-                feature.highestRunScoringBatsmen(matches, deliveries, true);
+                feature.highestRunScoringBatsmen(true);
                 break;
             case 7:
-                feature.topWicketTakingBowler(matches, deliveries, true);
+                feature.topWicketTakingBowler(true);
                 break;
             case 8:
-                feature.topWicketTakingBowler(matches, deliveries, false);
+                feature.topWicketTakingBowler(false);
                 break;
             case 9:
-                feature.highestRunScoringBatsmen(matches, deliveries, false);
+                feature.highestRunScoringBatsmen(false);
                 break;
             case 10:
-                feature.highestStrikeRateVenueAgainstTeam(matches, deliveries);
+                feature.highestStrikeRateVenueAgainstTeam();
                 break;
             default:
                 System.out.println("Invalid feature.");

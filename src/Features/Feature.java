@@ -1,5 +1,7 @@
 package Features;
 
+import DataExtraction.DeliveriesExtraction;
+import DataExtraction.MatchesExtraction;
 import Models.Delivery;
 import Models.Match;
 import POJO.*;
@@ -8,8 +10,17 @@ import Utils.*;
 import java.util.*;
 
 public class Feature {
-    Utils utils = new Utils();
-    public void matchesPerYear(List<Match> matches){
+    private final List<Match> matches;
+    private final List<Delivery> deliveries;
+    private final Utils utils;
+
+    public Feature(){
+        this.matches = MatchesExtraction.dataExtract();
+        this.deliveries = DeliveriesExtraction.dataExtract();
+        this.utils = new Utils();
+    }
+
+    public void matchesPerYear(){
         TreeMap<Integer, Integer> perYear = new TreeMap<>();
 
         for(Match match: matches){
@@ -20,7 +31,7 @@ public class Feature {
         Display.printMatchesPerYear(perYear);
     }
 
-    public void matchesWonAllTeams(List<Match> matches){
+    public void matchesWonAllTeams(){
         HashMap<String, Integer> matchesWon = new HashMap<>();
 
         for(Match match: matches){
@@ -30,12 +41,12 @@ public class Feature {
         Display.printMatchesWon(matchesWon);
     }
 
-    public void extraRunsConceded(List<Match> matches, List<Delivery> deliveries){
+    public void extraRunsConceded(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the Session :");
         int session = sc.nextInt();
 
-        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, Integer> extraRunsPerTeam = new HashMap<>();
 
         for(Delivery delivery: deliveries){
@@ -49,11 +60,11 @@ public class Feature {
         Display.printExtraRuns(session, extraRunsPerTeam);
     }
 
-    public void topEconomicalBowlers(List<Match> matches, List<Delivery> deliveries){
+    public void topEconomicalBowlers(){
         int bowlers = utils.intInput("Enter the number of Bowlers :");
         int session = utils.intInput("Enter the Session :");
 
-        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, BallsAndRuns> bowlersAndRuns = new HashMap<>();
         List<BowlerEconomy> economicalBowlers = new ArrayList<>();
 
@@ -89,11 +100,11 @@ public class Feature {
         Display.printEconomicalBowlers(economicalBowlers, bowlers);
     }
 
-    public void topStrikeRate(List<Match> matches, List<Delivery> deliveries){
+    public void topStrikeRate(){
         int batsmen = utils.intInput("Enter the number of Batsmen :");
         int session = utils.intInput("Enter the Session :");
 
-        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
         List<BatsmanStikeRate> batsmanStikeRates = new ArrayList<>();
 
@@ -122,13 +133,13 @@ public class Feature {
         Display.printTopStrikeRate(batsmanStikeRates, batsmen);
     }
 
-    public void topWicketTakingBowler(List<Match> matches, List<Delivery> deliveries, boolean purpleCap){
+    public void topWicketTakingBowler(boolean purpleCap){
         int bowlers = 0;
         if(!purpleCap)
             bowlers = utils.intInput("Enter the number of Bowlers :");
         int session = utils.intInput("Enter the Session :");
 
-        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, Integer> bowlersAndWickets = new HashMap<>();
         List<BowlerWickets> wicketBowlers = new ArrayList<>();
 
@@ -151,13 +162,13 @@ public class Feature {
             Display.printWicketBowlers(wicketBowlers, bowlers);
     }
 
-    public void highestRunScoringBatsmen(List<Match> matches, List<Delivery> deliveries, boolean orangeCap){
+    public void highestRunScoringBatsmen(boolean orangeCap){
         int batsmen = 1;
         if(!orangeCap)
             batsmen = utils.intInput("Enter the number of Batsmen :");
         int session = utils.intInput("Enter the Session :");
 
-        HashSet<Integer> matchSet = matchesBySession(session, matches);
+        HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, Integer> batsmanAndRuns = new HashMap<>();
         List<BatsmenRuns> batsmenRuns = new ArrayList<>();
 
@@ -181,13 +192,13 @@ public class Feature {
             Display.printTopBatsmenRuns(batsmenRuns, batsmen);
     }
 
-    public void highestStrikeRateVenueAgainstTeam(List<Match> matches, List<Delivery> deliveries){
+    public void highestStrikeRateVenueAgainstTeam(){
         int batsmen = utils.intInput("Enter the number of Batsmen :");
         int session = utils.intInput("Enter the Session :");
         String venue = utils.stringInput("Enter the name of Venue :");
         String bowlingTeam = utils.stringInput("Enter the name of the bowling team:");
 
-        HashSet<Integer> matchSet = matchesBySessionAndVenue(session, venue, matches);
+        HashSet<Integer> matchSet = matchesBySessionAndVenue(session, venue);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
         List<BatsmanStikeRate> batsmanStrikeRates = new ArrayList<>();
 
@@ -216,7 +227,7 @@ public class Feature {
         Display.printTopStrikeRateVenueAgainstTea(batsmanStrikeRates, batsmen, bowlingTeam, venue);
     }
 
-    private HashSet<Integer> matchesBySession(int session, List<Match> matches){
+    private HashSet<Integer> matchesBySession(int session){
         HashSet<Integer> matchSet = new HashSet<>();
         for(Match match: matches){
             if(match.getSeason() == session){
@@ -225,12 +236,12 @@ public class Feature {
         }
 
         if(matchSet.isEmpty())
-            System.out.println("There were no Matches played in :" + session);
+            System.out.println("There were no Matches played in : " + session);
 
         return matchSet;
     }
 
-    private HashSet<Integer> matchesBySessionAndVenue(int session, String venue, List<Match> matches){
+    private HashSet<Integer> matchesBySessionAndVenue(int session, String venue){
         HashSet<Integer> matchSet = new HashSet<>();
         for(Match match: matches){
             if(match.getSeason() == session){
@@ -240,7 +251,7 @@ public class Feature {
         }
 
         if(matchSet.isEmpty())
-            System.out.println("There were no Matches played in :" + session + " " + venue);
+            System.out.println("There were no Matches played in : " + session + " in : " + venue);
 
         return matchSet;
     }

@@ -1,38 +1,17 @@
 package Controller;
 
 import Features.Feature;
-import Utils.Display;
 import Utils.Utils;
-
-import java.util.Scanner;
 
 public class FeatureController {
     static Feature feature;
     public static void start(String deliveryCsv, String matchesCsv) {
         feature = new Feature(deliveryCsv, matchesCsv);
 
-        startInput();
+        Utils.startInput();
     }
 
-    private static void startInput(){
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            Display.menuSection();
-            Display.displayFeatures();
-            int input = sc.nextInt();
-
-            if (input == 0)
-                break;
-
-            callFeature(input);
-            Display.line();
-        }
-
-        sc.close();
-    }
-
-    private static void callFeature(int input) {
+    public static void callFeature(int input) {
         switch (input) {
             case 1:
                 feature.matchesPerYear();

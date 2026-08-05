@@ -35,6 +35,13 @@ public class Utils {
 
     public int intInput(String message){
         System.out.println(message);
-        return sc.nextInt();
+        int input = sc.nextInt();
+        sc.nextLine();
+        return input;
+    }
+
+    public String stringInput(String message){
+        System.out.println(message);
+        return sc.nextLine();
     }
 }

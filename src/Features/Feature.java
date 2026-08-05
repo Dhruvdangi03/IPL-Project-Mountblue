@@ -181,6 +181,41 @@ public class Feature {
             Display.printTopBatsmenRuns(batsmenRuns, batsmen);
     }
 
+    public void highestStrikeRateVenueAgainstTeam(List<Match> matches, List<Delivery> deliveries){
+        int batsmen = utils.intInput("Enter the number of Batsmen :");
+        int session = utils.intInput("Enter the Session :");
+        String venue = utils.stringInput("Enter the name of Venue :");
+        String bowlingTeam = utils.stringInput("Enter the name of the bowling team:");
+
+        HashSet<Integer> matchSet = matchesBySessionAndVenue(session, venue, matches);
+        HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
+        List<BatsmanStikeRate> batsmanStrikeRates = new ArrayList<>();
+
+        for (Delivery delivery: deliveries){
+            if(matchSet.contains(delivery.getMatchId())){
+                if((!delivery.getBowlingTeam().equals(bowlingTeam)) && (delivery.getWideRuns() > 0 || delivery.getNoBallRuns() > 0))
+                    continue;
+
+                int[] ballsRuns = batsmanAndRuns.getOrDefault(delivery.getBatsman(), new int[]{0, 0});
+                ballsRuns[0] += delivery.getBatsmanRuns();
+                ballsRuns[1]++;
+                batsmanAndRuns.put(delivery.getBatsman(), ballsRuns);
+            }
+        }
+
+        for(Map.Entry<String, int[]> entry: batsmanAndRuns.entrySet()){
+            int runs = entry.getValue()[0];
+            int balls = entry.getValue()[1];
+            if(balls < 100)
+                continue;
+            double strikeRate = ((double) runs / balls) * 100;
+            batsmanStrikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
+        }
+
+        batsmanStrikeRates.sort(BatsmanStikeRate::compareTo);
+        Display.printTopStrikeRateVenueAgainstTea(batsmanStrikeRates, batsmen, bowlingTeam, venue);
+    }
+
     private HashSet<Integer> matchesBySession(int session, List<Match> matches){
         HashSet<Integer> matchSet = new HashSet<>();
         for(Match match: matches){
@@ -191,6 +226,21 @@ public class Feature {
 
         if(matchSet.isEmpty())
             System.out.println("There were no Matches played in :" + session);
+
+        return matchSet;
+    }
+
+    private HashSet<Integer> matchesBySessionAndVenue(int session, String venue, List<Match> matches){
+        HashSet<Integer> matchSet = new HashSet<>();
+        for(Match match: matches){
+            if(match.getSeason() == session){
+                if(match.getVenue().equals(venue) || venue.equals("all"))
+                    matchSet.add(match.getMatchId());
+            }
+        }
+
+        if(matchSet.isEmpty())
+            System.out.println("There were no Matches played in :" + session + " " + venue);
 
         return matchSet;
     }

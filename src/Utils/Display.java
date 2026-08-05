@@ -40,6 +40,7 @@ public class Display {
         System.out.println("Enter 7 for Purple Cap Winner");
         System.out.println("Enter 8 for Leading Wicket Takers");
         System.out.println("Enter 9 for Top Run Scoring Batsmen");
+        System.out.println("Enter 10 for Top Strike Rate Batsmen Against a Team in a venue");
 
 
         System.out.println("Enter feature (or 0 for exit): ");
@@ -190,5 +191,24 @@ public class Display {
     public static void printPurpleCap(List<BowlerWickets> wicketBowlers, int session) {
         printTitle("The Winner of Purple Cap in Session : " + session + " is " + wicketBowlers.get(0).getBowler());
         simpleLine();
+    }
+
+    public static void printTopStrikeRateVenueAgainstTea(List<BatsmanStikeRate> batsmanStikeRates, int limit, String bowlingTeam, String venue) {
+        printTitle("Top " + limit + " Batsmen with highest Strike Rate Against : " + bowlingTeam + " in venue : " + venue);
+
+        System.out.printf("%-5s | %-30s | %-10s%n",
+                "Rank", "Batsman", "Strike Rate");
+        simpleLine();
+
+        int rank = 1;
+        for (BatsmanStikeRate batsmanStikeRate : batsmanStikeRates) {
+            if (rank > limit)
+                break;
+
+            System.out.printf("%-5d | %-30s | %-10f%n",
+                    rank++,
+                    batsmanStikeRate.getBatsman(),
+                    batsmanStikeRate.getStrikeRate());
+        }
     }
 }

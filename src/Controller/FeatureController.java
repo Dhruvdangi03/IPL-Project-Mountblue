@@ -72,6 +72,9 @@ public class FeatureController {
             case 9:
                 feature.highestRunScoringBatsmen(matches, deliveries, false);
                 break;
+            case 10:
+                feature.highestStrikeRateVenueAgainstTeam(matches, deliveries);
+                break;
             default:
                 System.out.println("Invalid feature.");
         }

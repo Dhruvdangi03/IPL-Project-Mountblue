@@ -38,7 +38,7 @@ public class Display {
         System.out.println("Enter 5 for Top Strike Rate Batsmen");
         System.out.println("Enter 6 for Orange Cap Winner");
         System.out.println("Enter 7 for Purple Cap Winner");
-        System.out.println("Enter 8 for Leading Wicket Takers");;
+        System.out.println("Enter 8 for Leading Wicket Takers");
         System.out.println("Enter 9 for Top Run Scoring Batsmen");
 
 

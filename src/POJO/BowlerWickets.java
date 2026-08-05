@@ -20,9 +20,9 @@ public class BowlerWickets implements Comparable<BowlerWickets> {
     @Override
     public int compareTo(BowlerWickets other) {
         if(this.getWickets() > other.getWickets())
-            return 1;
-        else if(this.getWickets() < other.getWickets())
             return -1;
+        else if(this.getWickets() < other.getWickets())
+            return 1;
 
         return 0;
     }

@@ -13,9 +13,17 @@ public class Feature {
     private final List<Match> matches;
     private final List<Delivery> deliveries;
 
-    public Feature(){
-        this.matches = MatchesExtraction.dataExtract();
-        this.deliveries = DeliveriesExtraction.dataExtract();
+    public Feature(String deliveryCsv, String matchesCsv){
+        this.matches = MatchesExtraction.dataExtract(matchesCsv);
+        this.deliveries = DeliveriesExtraction.dataExtract(deliveryCsv);
+    }
+
+    public void displayData(String mode){
+        switch (mode) {
+            case "all" -> Display.printALl(matches, deliveries);
+            case "matches" -> Display.printMatches(matches);
+            case "delivery" -> Display.printDeliveries(deliveries);
+        }
     }
 
     public void matchesPerYear(){
@@ -104,7 +112,7 @@ public class Feature {
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
-        List<BatsmanStikeRate> batsmanStikeRates = new ArrayList<>();
+        List<BatsmanStikeRate> batsmanStrikeRates = new ArrayList<>();
 
         for (Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
@@ -123,11 +131,11 @@ public class Feature {
             int balls = entry.getValue()[1];
 
             double strikeRate = ((double) runs / balls) * 100;
-            batsmanStikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
+            batsmanStrikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
         }
 
-        batsmanStikeRates.sort(BatsmanStikeRate::compareTo);
-        Display.printTopStrikeRate(batsmanStikeRates, batsmen);
+        batsmanStrikeRates.sort(BatsmanStikeRate::compareTo);
+        Display.printTopStrikeRate(batsmanStrikeRates, batsmen);
     }
 
     public void topWicketTakingBowler(boolean purpleCap){

@@ -9,17 +9,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class DeliveriesExtraction {
-    public static List<Delivery> dataExtract(){
+    public static List<Delivery> dataExtract(String deliveryCsv){
         List<Delivery> deliveries = new ArrayList<>();
         try{
-            Scanner sc = new Scanner(new File("deliveries.csv"));
+            Scanner sc = new Scanner(new File(deliveryCsv));
             sc.nextLine();
-            Utils utils = new Utils();
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
 
-                List<String> values = utils.split(line);
+                List<String> values = Utils.split(line);
 
                 Delivery delivery = makeDelivery(values);
                 deliveries.add(delivery);

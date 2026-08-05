@@ -10,17 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MatchesExtraction {
-    public static List<Match> dataExtract(){
+    public static List<Match> dataExtract(String matchesCsv){
         List<Match> matches = new ArrayList<>();
         try{
-            Scanner sc = new Scanner(new File("matches.csv"));
+            Scanner sc = new Scanner(new File(matchesCsv));
             sc.nextLine();
-            Utils utils = new Utils();
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
 
-                List<String> values = utils.split(line);
+                List<String> values = Utils.split(line);
 
                 Match match = makeMatch(values);
                 matches.add(match);

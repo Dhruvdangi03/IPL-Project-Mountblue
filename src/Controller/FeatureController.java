@@ -2,12 +2,15 @@ package Controller;
 
 import Features.Feature;
 import Utils.Display;
+import Utils.Utils;
 
 import java.util.Scanner;
 
 public class FeatureController {
-    static Feature feature = new Feature();
-    public static void start() {
+    static Feature feature;
+    public static void start(String deliveryCsv, String matchesCsv) {
+        feature = new Feature(deliveryCsv, matchesCsv);
+
         startInput();
     }
 

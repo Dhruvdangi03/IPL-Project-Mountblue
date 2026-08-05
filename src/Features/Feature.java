@@ -12,12 +12,10 @@ import java.util.*;
 public class Feature {
     private final List<Match> matches;
     private final List<Delivery> deliveries;
-    private final Utils utils;
 
     public Feature(){
         this.matches = MatchesExtraction.dataExtract();
         this.deliveries = DeliveriesExtraction.dataExtract();
-        this.utils = new Utils();
     }
 
     public void matchesPerYear(){
@@ -61,8 +59,8 @@ public class Feature {
     }
 
     public void topEconomicalBowlers(){
-        int bowlers = utils.intInput("Enter the number of Bowlers :");
-        int session = utils.intInput("Enter the Session :");
+        int bowlers = Utils.intInput("Enter the number of Bowlers :");
+        int session = Utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, BallsAndRuns> bowlersAndRuns = new HashMap<>();
@@ -101,8 +99,8 @@ public class Feature {
     }
 
     public void topStrikeRate(){
-        int batsmen = utils.intInput("Enter the number of Batsmen :");
-        int session = utils.intInput("Enter the Session :");
+        int batsmen = Utils.intInput("Enter the number of Batsmen :");
+        int session = Utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
@@ -135,8 +133,8 @@ public class Feature {
     public void topWicketTakingBowler(boolean purpleCap){
         int bowlers = 0;
         if(!purpleCap)
-            bowlers = utils.intInput("Enter the number of Bowlers :");
-        int session = utils.intInput("Enter the Session :");
+            bowlers = Utils.intInput("Enter the number of Bowlers :");
+        int session = Utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, Integer> bowlersAndWickets = new HashMap<>();
@@ -164,8 +162,8 @@ public class Feature {
     public void highestRunScoringBatsmen(boolean orangeCap){
         int batsmen = 1;
         if(!orangeCap)
-            batsmen = utils.intInput("Enter the number of Batsmen :");
-        int session = utils.intInput("Enter the Session :");
+            batsmen = Utils.intInput("Enter the number of Batsmen :");
+        int session = Utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, Integer> batsmanAndRuns = new HashMap<>();
@@ -192,10 +190,10 @@ public class Feature {
     }
 
     public void highestStrikeRateVenueAgainstTeam(){
-        int batsmen = utils.intInput("Enter the number of Batsmen :");
-        int session = utils.intInput("Enter the Session :");
-        String venue = utils.stringInput("Enter the name of Venue :");
-        String bowlingTeam = utils.stringInput("Enter the name of the bowling team:");
+        int batsmen = Utils.intInput("Enter the number of Batsmen :");
+        int session = Utils.intInput("Enter the Session :");
+        String venue = Utils.stringInput("Enter the name of Venue :");
+        String bowlingTeam = Utils.stringInput("Enter the name of the bowling team:");
 
         HashSet<Integer> matchSet = matchesBySessionAndVenue(session, venue);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();

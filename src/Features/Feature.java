@@ -123,8 +123,7 @@ public class Feature {
         for(Map.Entry<String, int[]> entry: batsmanAndRuns.entrySet()){
             int runs = entry.getValue()[0];
             int balls = entry.getValue()[1];
-            if(balls < 100)
-                continue;
+
             double strikeRate = ((double) runs / balls) * 100;
             batsmanStikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
         }
@@ -204,7 +203,7 @@ public class Feature {
 
         for (Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
-                if((!delivery.getBowlingTeam().equals(bowlingTeam)) && (delivery.getWideRuns() > 0 || delivery.getNoBallRuns() > 0))
+                if((!delivery.getBowlingTeam().equals(bowlingTeam)) || (delivery.getWideRuns() > 0 || delivery.getNoBallRuns() > 0))
                     continue;
 
                 int[] ballsRuns = batsmanAndRuns.getOrDefault(delivery.getBatsman(), new int[]{0, 0});
@@ -217,8 +216,7 @@ public class Feature {
         for(Map.Entry<String, int[]> entry: batsmanAndRuns.entrySet()){
             int runs = entry.getValue()[0];
             int balls = entry.getValue()[1];
-            if(balls < 100)
-                continue;
+
             double strikeRate = ((double) runs / balls) * 100;
             batsmanStrikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
         }

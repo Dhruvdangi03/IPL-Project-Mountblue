@@ -8,9 +8,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
-public class MatchesExtraction {
-    public static List<Match> dataExtract(String matchesCsv){
+public class MatchesExtraction implements Callable<List<Match>> {
+    private final String matchesPath;
+
+    public MatchesExtraction(String matchesPath){
+        this.matchesPath = matchesPath;
+    }
+
+    public List<Match> dataExtract(String matchesCsv){
         List<Match> matches = new ArrayList<>();
         try{
             Scanner sc = new Scanner(new File(matchesCsv));
@@ -34,7 +41,7 @@ public class MatchesExtraction {
         return matches;
     }
 
-    private static Match makeMatch(List<String> values) {
+    private Match makeMatch(List<String> values) {
         Match match = new Match();
 
         match.setMatchId(Integer.parseInt(values.get(0)));
@@ -63,5 +70,10 @@ public class MatchesExtraction {
         }
 
         return match;
+    }
+
+    @Override
+    public List<Match> call() throws Exception {
+        return dataExtract(matchesPath);
     }
 }

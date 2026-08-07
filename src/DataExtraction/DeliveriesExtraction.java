@@ -7,9 +7,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Callable;
 
-public class DeliveriesExtraction {
-    public static List<Delivery> dataExtract(String deliveryCsv){
+public class DeliveriesExtraction implements Callable<List<Delivery>> {
+    private final String deliveryPath;
+
+    public DeliveriesExtraction(String deliveryPath){
+        this.deliveryPath = deliveryPath;
+    }
+
+    private List<Delivery> dataExtract(String deliveryCsv){
         List<Delivery> deliveries = new ArrayList<>();
         try{
             Scanner sc = new Scanner(new File(deliveryCsv));
@@ -33,7 +40,7 @@ public class DeliveriesExtraction {
         return deliveries;
     }
 
-    private static Delivery makeDelivery(List<String> values) {
+    private Delivery makeDelivery(List<String> values) {
         Delivery delivery = new Delivery();
 
         delivery.setMatchId(Integer.parseInt(values.get(0)));
@@ -59,5 +66,10 @@ public class DeliveriesExtraction {
         delivery.setFielder(values.get(20));
 
         return delivery;
+    }
+
+    @Override
+    public List<Delivery> call() throws Exception {
+        return dataExtract(deliveryPath);
     }
 }

@@ -10,12 +10,18 @@ import Utils.*;
 import java.util.*;
 
 public class Feature {
-    private final List<Match> matches;
-    private final List<Delivery> deliveries;
+    private List<Match> matches;
+    private List<Delivery> deliveries;
 
     public Feature(String deliveryCsv, String matchesCsv){
-        this.matches = MatchesExtraction.dataExtract(matchesCsv);
-        this.deliveries = DeliveriesExtraction.dataExtract(deliveryCsv);
+        MatchesExtraction matchesExtraction = new MatchesExtraction(matchesCsv);
+        DeliveriesExtraction deliveriesExtraction = new DeliveriesExtraction(deliveryCsv);
+        try{
+            this.matches = matchesExtraction.call();
+            this.deliveries = deliveriesExtraction.call();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void displayData(String mode){

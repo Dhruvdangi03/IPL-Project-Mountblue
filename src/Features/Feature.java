@@ -8,6 +8,9 @@ import POJO.*;
 import Utils.*;
 
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Feature {
     private List<Match> matches;
@@ -16,11 +19,19 @@ public class Feature {
     public Feature(String deliveryCsv, String matchesCsv){
         MatchesExtraction matchesExtraction = new MatchesExtraction(matchesCsv);
         DeliveriesExtraction deliveriesExtraction = new DeliveriesExtraction(deliveryCsv);
+
+        ExecutorService executor = Executors.newFixedThreadPool(2);
+
+        Future<List<Match>> matchesFuture = executor.submit(matchesExtraction);
+        Future<List<Delivery>> deliveriesFuture = executor.submit(deliveriesExtraction);
+
         try{
-            this.matches = matchesExtraction.call();
-            this.deliveries = deliveriesExtraction.call();
+            this.matches = matchesFuture.get();
+            this.deliveries = deliveriesFuture.get();
         }catch (Exception e){
             System.out.println(e.getMessage());
+        }finally {
+            executor.shutdown();
         }
     }
 

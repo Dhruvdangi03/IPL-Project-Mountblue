@@ -18,20 +18,17 @@ public class DeliveriesExtraction implements Callable<List<Delivery>> {
 
     private List<Delivery> dataExtract(String deliveryCsv){
         List<Delivery> deliveries = new ArrayList<>();
-        try{
-            Scanner sc = new Scanner(new File(deliveryCsv));
+        try(Scanner sc = new Scanner(new File(deliveryCsv))){
             sc.nextLine();
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-
+                Thread.sleep(1000);
                 List<String> values = Utils.split(line);
 
                 Delivery delivery = makeDelivery(values);
                 deliveries.add(delivery);
             }
-
-            sc.close();
         } catch (Exception e) {
             System.out.println("Deliveries");
             System.out.println(e.getMessage());
@@ -70,6 +67,8 @@ public class DeliveriesExtraction implements Callable<List<Delivery>> {
 
     @Override
     public List<Delivery> call() throws Exception {
+        Thread.currentThread().setName("Delivery");
+        System.out.println(Thread.currentThread().getName());
         return dataExtract(deliveryPath);
     }
 }

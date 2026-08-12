@@ -19,20 +19,17 @@ public class MatchesExtraction implements Callable<List<Match>> {
 
     public List<Match> dataExtract(String matchesCsv){
         List<Match> matches = new ArrayList<>();
-        try{
-            Scanner sc = new Scanner(new File(matchesCsv));
+        try(Scanner sc = new Scanner(new File(matchesCsv))){
             sc.nextLine();
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-
+                Thread.sleep(1000);
                 List<String> values = Utils.split(line);
 
                 Match match = makeMatch(values);
                 matches.add(match);
             }
-
-            sc.close();
         } catch (Exception e) {
             System.out.println("Matches");
             System.out.println(e.getMessage());
@@ -74,6 +71,8 @@ public class MatchesExtraction implements Callable<List<Match>> {
 
     @Override
     public List<Match> call() throws Exception {
+        Thread.currentThread().setName("Match");
+        System.out.println(Thread.currentThread().getName());
         return dataExtract(matchesPath);
     }
 }

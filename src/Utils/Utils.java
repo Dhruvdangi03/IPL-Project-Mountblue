@@ -43,6 +43,8 @@ public class Utils {
 
         boolean insideQuotes = false;
 
+        System.out.println(Thread.currentThread().getName());
+
         for (int i = 0; i < str.length(); i++) {
             char ch = str.charAt(i);
 

@@ -23,7 +23,6 @@ public class DeliveriesExtraction implements Callable<List<Delivery>> {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                Thread.sleep(1000);
                 List<String> values = Utils.split(line);
 
                 Delivery delivery = makeDelivery(values);
@@ -68,7 +67,6 @@ public class DeliveriesExtraction implements Callable<List<Delivery>> {
     @Override
     public List<Delivery> call() throws Exception {
         Thread.currentThread().setName("Delivery");
-        System.out.println(Thread.currentThread().getName());
         return dataExtract(deliveryPath);
     }
 }

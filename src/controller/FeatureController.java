@@ -1,14 +1,25 @@
-package Controller;
+package controller;
 
-import Features.Feature;
-import Utils.Utils;
+import features.Feature;
+import utils.Display;
+import utils.Utils;
 
 public class FeatureController {
     static Feature feature;
     public static void start(String deliveryCsv, String matchesCsv) {
         feature = new Feature(deliveryCsv, matchesCsv);
 
-        Utils.startInput();
+        while (true) {
+            Display.menuSection();
+            Display.displayFeatures();
+            int input = Utils.intInput("");
+
+            if (input == 0)
+                break;
+
+            callFeature(input);
+            Display.line();
+        }
     }
 
     public static void callFeature(int input) {

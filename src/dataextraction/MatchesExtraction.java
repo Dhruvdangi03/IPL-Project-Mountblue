@@ -1,7 +1,7 @@
-package DataExtraction;
+package dataextraction;
 
-import Models.Match;
-import Utils.Utils;
+import models.Match;
+import utils.Utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -24,7 +24,6 @@ public class MatchesExtraction implements Callable<List<Match>> {
 
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
-                Thread.sleep(1000);
                 List<String> values = Utils.split(line);
 
                 Match match = makeMatch(values);
@@ -72,7 +71,6 @@ public class MatchesExtraction implements Callable<List<Match>> {
     @Override
     public List<Match> call() throws Exception {
         Thread.currentThread().setName("Match");
-        System.out.println(Thread.currentThread().getName());
         return dataExtract(matchesPath);
     }
 }

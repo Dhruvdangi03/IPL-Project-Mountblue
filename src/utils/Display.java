@@ -1,11 +1,11 @@
-package Utils;
+package utils;
 
-import POJO.BatsmanStikeRate;
-import POJO.BatsmenRuns;
-import POJO.BowlerEconomy;
-import Models.Delivery;
-import Models.Match;
-import POJO.BowlerWickets;
+import pojo.BatsmanStikeRate;
+import pojo.BatsmenRuns;
+import pojo.BowlerEconomy;
+import models.Delivery;
+import models.Match;
+import pojo.BowlerWickets;
 
 import java.util.List;
 import java.util.Map;

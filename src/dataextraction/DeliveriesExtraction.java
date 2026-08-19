@@ -1,7 +1,7 @@
-package DataExtraction;
+package dataextraction;
 
-import Models.Delivery;
-import Utils.Utils;
+import models.Delivery;
+import utils.Utils;
 
 import java.io.File;
 import java.util.ArrayList;

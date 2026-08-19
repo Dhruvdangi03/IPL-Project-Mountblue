@@ -1,11 +1,11 @@
-package Features;
+package features;
 
-import DataExtraction.DeliveriesExtraction;
-import DataExtraction.MatchesExtraction;
-import Models.Delivery;
-import Models.Match;
-import POJO.*;
-import Utils.*;
+import dataextraction.DeliveriesExtraction;
+import dataextraction.MatchesExtraction;
+import models.Delivery;
+import models.Match;
+import pojo.*;
+import utils.*;
 
 import java.util.*;
 import java.util.concurrent.ExecutorService;

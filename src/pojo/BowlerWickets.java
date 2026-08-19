@@ -1,4 +1,4 @@
-package POJO;
+package pojo;
 
 public class BowlerWickets implements Comparable<BowlerWickets> {
     private int wickets;

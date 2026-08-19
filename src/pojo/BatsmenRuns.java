@@ -1,4 +1,4 @@
-package POJO;
+package pojo;
 
 public class BatsmenRuns implements Comparable<BatsmenRuns> {
     private String batsman;

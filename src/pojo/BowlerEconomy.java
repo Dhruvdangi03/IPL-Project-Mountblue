@@ -1,4 +1,4 @@
-package POJO;
+package pojo;
 
 public class BowlerEconomy implements Comparable<BowlerEconomy> {
     private double economy;

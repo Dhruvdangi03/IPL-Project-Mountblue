@@ -1,6 +1,4 @@
-package Utils;
-
-import Controller.FeatureController;
+package utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,24 +7,10 @@ import java.util.Scanner;
 public class Utils {
     static Scanner sc = new Scanner(System.in);
 
-    public static void startInput(){
-        while (true) {
-            Display.menuSection();
-            Display.displayFeatures();
-            int input = sc.nextInt();
-
-            if (input == 0)
-                break;
-
-            FeatureController.callFeature(input);
-            Display.line();
-        }
-
-        sc.close();
-    }
-
     public static int intInput(String message){
-        System.out.println(message);
+        if(!message.isEmpty())
+            System.out.println(message);
+
         int input = sc.nextInt();
         sc.nextLine();
         return input;

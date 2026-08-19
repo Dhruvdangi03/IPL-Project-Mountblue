@@ -1,7 +1,7 @@
-package DataExtraction;
+package dataextraction;
 
-import Models.Match;
-import Utils.Utils;
+import models.Match;
+import utils.Utils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;

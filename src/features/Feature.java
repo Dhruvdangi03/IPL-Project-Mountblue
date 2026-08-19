@@ -37,7 +37,7 @@ public class Feature {
 
     public void displayData(String mode){
         switch (mode) {
-            case "all" -> Display.printALl(matches, deliveries);
+            case "all" -> Display.printAll(matches, deliveries);
             case "matches" -> Display.printMatches(matches);
             case "delivery" -> Display.printDeliveries(deliveries);
         }
@@ -112,7 +112,7 @@ public class Feature {
         for (Map.Entry<String, BallsAndRuns> entry : bowlersAndRuns.entrySet()){
             BallsAndRuns stats = entry.getValue();
             int legalBalls = stats.getTotalBalls() - stats.getWideBalls() - stats.getNoBalls();
-            if (legalBalls == 6) {
+            if (legalBalls < 6) {
                 continue;
             }
             double overs = legalBalls / 6.0;
@@ -130,7 +130,7 @@ public class Feature {
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
-        List<BatsmanStikeRate> batsmanStrikeRates = new ArrayList<>();
+        List<BatsmanStrikeRate> batsmanStrikeRates = new ArrayList<>();
 
         for (Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
@@ -149,10 +149,10 @@ public class Feature {
             int balls = entry.getValue()[1];
 
             double strikeRate = ((double) runs / balls) * 100;
-            batsmanStrikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
+            batsmanStrikeRates.add(new BatsmanStrikeRate(entry.getKey(), strikeRate));
         }
 
-        batsmanStrikeRates.sort(BatsmanStikeRate::compareTo);
+        batsmanStrikeRates.sort(BatsmanStrikeRate::compareTo);
         Display.printTopStrikeRate(batsmanStrikeRates, batsmen);
     }
 
@@ -224,7 +224,7 @@ public class Feature {
 
         HashSet<Integer> matchSet = matchesBySessionAndVenue(session, venue);
         HashMap<String, int[]> batsmanAndRuns = new HashMap<>();
-        List<BatsmanStikeRate> batsmanStrikeRates = new ArrayList<>();
+        List<BatsmanStrikeRate> batsmanStrikeRates = new ArrayList<>();
 
         for (Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
@@ -243,11 +243,11 @@ public class Feature {
             int balls = entry.getValue()[1];
 
             double strikeRate = ((double) runs / balls) * 100;
-            batsmanStrikeRates.add(new BatsmanStikeRate(entry.getKey(), strikeRate));
+            batsmanStrikeRates.add(new BatsmanStrikeRate(entry.getKey(), strikeRate));
         }
 
-        batsmanStrikeRates.sort(BatsmanStikeRate::compareTo);
-        Display.printTopStrikeRateVenueAgainstTea(batsmanStrikeRates, batsmen, bowlingTeam, venue);
+        batsmanStrikeRates.sort(BatsmanStrikeRate::compareTo);
+        Display.printTopStrikeRateVenueAgainstTeam(batsmanStrikeRates, batsmen, bowlingTeam, venue);
     }
 
     private HashSet<Integer> matchesBySession(int session){

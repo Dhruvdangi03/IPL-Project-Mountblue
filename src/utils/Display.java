@@ -1,6 +1,6 @@
 package utils;
 
-import pojo.BatsmanStikeRate;
+import pojo.BatsmanStrikeRate;
 import pojo.BatsmenRuns;
 import pojo.BowlerEconomy;
 import models.Delivery;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Display {
-    public static void printALl(List<Match> matches, List<Delivery> deliveries){
+    public static void printAll(List<Match> matches, List<Delivery> deliveries){
         for (Match match: matches)
             System.out.println(match.toString());
 
@@ -143,7 +143,7 @@ public class Display {
         }
     }
 
-    public static void printTopStrikeRate(List<BatsmanStikeRate> batsmanStikeRates, int limit) {
+    public static void printTopStrikeRate(List<BatsmanStrikeRate> batsmanStrikeRates, int limit) {
         printTitle("Top " + limit + " Batsmen with Strike Rate");
 
         System.out.printf("%-5s | %-30s | %-10s%n",
@@ -151,14 +151,14 @@ public class Display {
         simpleLine();
 
         int rank = 1;
-        for (BatsmanStikeRate batsmanStikeRate : batsmanStikeRates) {
+        for (BatsmanStrikeRate batsmanStrikeRate : batsmanStrikeRates) {
             if (rank > limit)
                 break;
 
             System.out.printf("%-5d | %-30s | %-10f%n",
                     rank++,
-                    batsmanStikeRate.getBatsman(),
-                    batsmanStikeRate.getStrikeRate());
+                    batsmanStrikeRate.getBatsman(),
+                    batsmanStrikeRate.getStrikeRate());
         }
     }
 
@@ -192,7 +192,7 @@ public class Display {
         simpleLine();
     }
 
-    public static void printTopStrikeRateVenueAgainstTea(List<BatsmanStikeRate> batsmanStikeRates, int limit, String bowlingTeam, String venue) {
+    public static void printTopStrikeRateVenueAgainstTeam(List<BatsmanStrikeRate> batsmanStrikeRates, int limit, String bowlingTeam, String venue) {
         printTitle("Top " + limit + " Batsmen with highest Strike Rate Against : " + bowlingTeam + " in venue : " + venue);
 
         System.out.printf("%-5s | %-30s | %-10s%n",
@@ -200,14 +200,14 @@ public class Display {
         simpleLine();
 
         int rank = 1;
-        for (BatsmanStikeRate batsmanStikeRate : batsmanStikeRates) {
+        for (BatsmanStrikeRate batsmanStrikeRate : batsmanStrikeRates) {
             if (rank > limit)
                 break;
 
             System.out.printf("%-5d | %-30s | %-10f%n",
                     rank++,
-                    batsmanStikeRate.getBatsman(),
-                    batsmanStikeRate.getStrikeRate());
+                    batsmanStrikeRate.getBatsman(),
+                    batsmanStrikeRate.getStrikeRate());
         }
     }
 }

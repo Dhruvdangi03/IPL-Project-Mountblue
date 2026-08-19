@@ -58,16 +58,15 @@ public class Feature {
         HashMap<String, Integer> matchesWon = new HashMap<>();
 
         for(Match match: matches){
-            matchesWon.put(match.getWinner(), matchesWon.getOrDefault(match.getWinner(), 0) +1);
+            matchesWon.put(match.getWinner(),
+                    matchesWon.getOrDefault(match.getWinner(), 0) + 1);
         }
 
         Display.printMatchesWon(matchesWon);
     }
 
     public void extraRunsConceded(){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Enter the Session :");
-        int session = sc.nextInt();
+        int session = Utils.intInput("Enter the Session :");
 
         HashSet<Integer> matchSet = matchesBySession(session);
         HashMap<String, Integer> extraRunsPerTeam = new HashMap<>();
@@ -75,7 +74,9 @@ public class Feature {
         for(Delivery delivery: deliveries){
             if(matchSet.contains(delivery.getMatchId())){
                 if(delivery.getExtraRuns() > 0){
-                    extraRunsPerTeam.put(delivery.getBowlingTeam(), extraRunsPerTeam.getOrDefault(delivery.getBowlingTeam(), 0) +1);
+                    extraRunsPerTeam.put(delivery.getBowlingTeam(),
+                            extraRunsPerTeam.getOrDefault(delivery.getBowlingTeam(), 0)
+                                    + delivery.getExtraRuns());
                 }
             }
         }
@@ -199,7 +200,8 @@ public class Feature {
                 if(delivery.getWideRuns() > 0 || delivery.getNoBallRuns() > 0)
                     continue;
 
-                batsmanAndRuns.put(delivery.getBatsman(), batsmanAndRuns.getOrDefault(delivery.getBatsman(),0) + delivery.getBatsmanRuns());
+                batsmanAndRuns.put(delivery.getBatsman(),
+                        batsmanAndRuns.getOrDefault(delivery.getBatsman(),0) + delivery.getBatsmanRuns());
             }
         }
 
